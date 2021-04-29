@@ -17,6 +17,6 @@ public class BoardDeleteServlet extends HttpServlet {
 		BoardVO vo = Database.list.remove(Integer.parseInt(no));
 		response.sendRedirect("/list");
 	}
-
+	
 }
  
