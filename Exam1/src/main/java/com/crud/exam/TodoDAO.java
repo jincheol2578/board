@@ -88,6 +88,32 @@ public class TodoDAO {
 			DBUtils.close(con, ps);
 		}
 	}
+
+	public static TodoVO modList(TodoVO vo) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = " UPDATE t_list "
+				+ " SET title = ?"
+				+ " ,content = ? "
+				+ " WHERE itodo = ? ";
+		
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, vo.getTitle());
+			ps.setString(2, vo.getContent());
+			ps.setInt(3, vo.getiTodo());
+			
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.close(con, ps);
+		}
+		
+		return null;
+	}
 	
 	
 }

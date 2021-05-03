@@ -10,8 +10,8 @@ public class DBUtils {
 	public static Connection getCon() throws Exception{
 		final String DRIVER = "com.mysql.cj.jdbc.Driver";
 		final String USER_NAME = "root";
-		final String PASSWORD = "koreait";
-		final String URL = "jdbc:mysql://localhost:3308/todolist";
+		final String PASSWORD = "1234";
+		final String URL = "jdbc:mysql://localhost:3306/todolist";
 		
 		Class.forName(DRIVER);
 		Connection con = DriverManager.getConnection(URL, USER_NAME, PASSWORD);

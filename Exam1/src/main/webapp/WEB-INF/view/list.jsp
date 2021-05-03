@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ToDo List</title>
 </head>
 <body>
-	<h1>TODO List</h1>
+	<h1>ToDo List</h1>
 	<form action="/write" method="post">
 		<div>
 		제목 : <input type="text" name="title">
@@ -24,26 +24,57 @@
 			<td>내용</td>
 			<td>날짜</td>
 		</tr>
-		<c:forEach var="item" items="${data}" varStatus="status">
-		<tr>
-			<td>
-			<input type="text" name="mtitle" value="${item.title }" onclick=mod(this.name); readonly>
-			</td>
-			<td>
-			<input type="text" name="mcontent" value="${item.content }" readonly>
-			</td>
-			<td>
-			<input type="text" value="${item.regdt }" readonly>
-			</td>
-			<td><a href="/del?itodo=${item.iTodo}"><button>삭제</button></a></td>
-		</tr>
-		</c:forEach>
 	</table>
+		
+	<c:forEach var="item" items="${data}" varStatus="status" >
+	<form action="/mod" method="post" onsubmit="return mod(${item.iTodo});">
+					<input type="hidden" name="itodo" value="${item.iTodo }">
+		<table>
+			<tr>
+				<td>
+					<input type="text" name="mtitle" id="mtitle${item.iTodo}" value="${item.title }" readonly>
+				</td>
+				<td>
+					<input type="text" name="mcontent" id="mcontent${item.iTodo}" value="${item.content }" readonly>
+				</td>
+				<td>
+					<input type="text" value="${item.regdt }" readonly>
+				</td>
+				<td><input type="button" value="삭제" onclick="del(${item.iTodo})"></td>
+				<td><input type="submit" value="수정" id="btnMod${item.iTodo}"></td>
+			</tr>
+		</table>
+	</form>
+	</c:forEach>
 </body>
 <script>
-	function mod(name) {
-		var upt = document.getByName(name);
-		upt.readOnly = false;
+	function mod(i) {
+		var btn = document.getElementById('btnMod'+i);
+		var tRead = document.getElementById('mtitle'+i);
+		var cRead = document.getElementById('mcontent'+i);
+		var form = document.form+i;
+		
+		if (btn.value === "수정"){
+			btn.value = "완료";
+			tRead.readOnly = false;
+			cRead.readOnly = false;
+			return false;
+			
+		}else{
+			btn.value = "수정";
+			tRead.readOnly = true;
+			cRead.readOnly = true;
+			return true;
+		}
+		
 	}
+	function del(i) {
+		location.href= '/del?itodo='+i;
+	}
+	/* function formsubmit(f){
+    	var name = f.name;
+        f.submit();
+        console.log("11");
+    } */
 </script>
 </html>
