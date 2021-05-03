@@ -7,28 +7,36 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class BoardWriteServlet3
- */
-@WebServlet("/write3")
-public class BoardWriteServlet3 extends HttpServlet {
+@WebServlet("/mod3")
+public class BoardModServlet3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String jsp = "WEB-INF/view/write3.jsp";
+		String iboard = request.getParameter("iboard");
+		int intIboard = Integer.parseInt(iboard);
+		BoardVO3 data = BoardDAO.selBoard(intIboard);
+		
+		request.setAttribute("data", data);
+		
+		String jsp = "/WEB-INF/view/mod3.jsp";
 		request.getRequestDispatcher(jsp).forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String iboard = request.getParameter("iboard");
 		String title = request.getParameter("title");
 		String ctnt = request.getParameter("ctnt");
+		int intIboard = Integer.parseInt(iboard);
 		
+		System.out.println(iboard);
+		System.out.println(title);
+		System.out.println(ctnt);
 		BoardVO3 vo = new BoardVO3();
+		vo.setIboard(intIboard);
 		vo.setTitle(title);
 		vo.setCtnt(ctnt);
 		
-		BoardDAO.insertBoard(vo);
-		response.sendRedirect("/list3");
-		
+		BoardDAO.updBoard(vo);
+		response.sendRedirect("/detail3?iboard="+iboard);
 	}
 
 }

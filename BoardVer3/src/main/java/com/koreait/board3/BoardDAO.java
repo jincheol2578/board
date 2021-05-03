@@ -10,7 +10,7 @@ import com.mysql.cj.protocol.Resultset;
 
 public class BoardDAO {
 	//INSERT
-	public static int insertBoard(BoardVO3 vo) {
+	public static void insertBoard(BoardVO3 vo) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
@@ -22,13 +22,13 @@ public class BoardDAO {
 			ps.setString(1, vo.getTitle());
 			ps.setString(2, vo.getCtnt());
 			
-			return ps.executeUpdate();  // insert, update, delete 영향받은행 정수값으로 return
+			ps.executeUpdate();  // insert, update, delete 영향받은행 정수값으로 return
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
 			DBUtils.close(con, ps);
 		}
-		return 0;
+	
 	}
 	//SELECT
 	public static List<BoardVO3> selBoardList() {
@@ -38,7 +38,8 @@ public class BoardDAO {
 		
 		List<BoardVO3> list = new ArrayList();
 		
-		String sql = " SELECT iboard,title,regdt FROM t_board";
+		String sql = " SELECT iboard,title,regdt FROM t_board"
+				+ " ORDER BY iboard desc ";
 		try {
 			con = DBUtils.getCon();
 			ps = con.prepareStatement(sql);
@@ -72,6 +73,7 @@ public class BoardDAO {
 		ResultSet rs = null;
 		
 		String sql = " SELECT title, ctnt, regdt FROM t_board WHERE iboard = ? ";
+		BoardVO3 vo = new BoardVO3();
 		try {
 			con = DBUtils.getCon();
 			ps = con.prepareStatement(sql);
@@ -80,7 +82,7 @@ public class BoardDAO {
 			rs = ps.executeQuery();
 			
 			if(rs.next()) {
-				BoardVO3 vo = new BoardVO3();
+				
 				
 				String ctnt = rs.getString("ctnt");
 				String title = rs.getString("title");
@@ -91,7 +93,6 @@ public class BoardDAO {
 				vo.setRegdt(regdt);
 				vo.setCtnt(ctnt);
 				
-				return vo;
 			}
 			
 		} catch (Exception e) {
@@ -99,6 +100,49 @@ public class BoardDAO {
 		}finally {
 			DBUtils.close(con, ps, rs);
 		}
-		return null;
+		return vo;
 	}
+	public static int deleteBoard(BoardVO3 param) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = "DELETE FROM t_board WHERE iboard = ?";
+		
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getIboard());
+			
+			return ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.close(con, ps);
+		}
+		return 0;
+	}
+	public static void updBoard(BoardVO3 vo) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = " UPDATE t_board "
+				+ " SET title = ?, "
+				+ " ctnt = ? "
+				+ " WHERE iboard = ? ";
+		
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, vo.getTitle());
+			ps.setString(2, vo.getCtnt());
+			ps.setInt(3, vo.getIboard());
+			
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.close(con, ps);
+		}
+	}
+	
+	
 }

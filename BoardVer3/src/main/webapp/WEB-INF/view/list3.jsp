@@ -39,7 +39,6 @@ border-collapse: collapse;
 	</div>
 	<script>
 		function moveToDetail(iboard) {
-			console.log('iboard : %d', iboard);
 			location.href = '/detail3?iboard='+iboard;
 		}
 	</script>
