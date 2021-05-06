@@ -52,7 +52,6 @@
 		var btn = document.getElementById('btnMod'+i);
 		var tRead = document.getElementById('mtitle'+i);
 		var cRead = document.getElementById('mcontent'+i);
-		var form = document.form+i;
 		
 		if (btn.value === "수정"){
 			btn.value = "완료";
