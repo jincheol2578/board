@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 public class BoardDetailServlet3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String iboard = request.getParameter("iboard");
-		int intIboard = Integer.parseInt(iboard);
 		
-		BoardVO3 data = BoardDAO.selBoard(intIboard);
+		int iboard = MyUtils.getParamInt("iboard", request);
+		
+		BoardVO3 data = BoardDAO.selBoard(iboard);
 		request.setAttribute("data", data);
 		
 		String jsp = "/WEB-INF/view/detail3.jsp";

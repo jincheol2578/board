@@ -12,12 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/list3")
 public class BoardListServlet3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		List<BoardVO3> list = BoardDAO.selBoardList();
 		request.setAttribute("list", list);
-		
-		String jsp = "WEB-INF/view/list3.jsp";
-		request.getRequestDispatcher(jsp).forward(request, response);
-		
+
+		MyUtils.openJSP("list3", request, response);
+
 	}
 }

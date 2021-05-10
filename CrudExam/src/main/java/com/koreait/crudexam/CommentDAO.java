@@ -17,8 +17,8 @@ public class CommentDAO {
 	public static void istComment(CommentVO vo) {
 		try {
 			con = DBUtils.getCon();
-			ps = con.prepareStatement(INSERT_COMMENT);
-			ps.setInt(1, vo.getIboard());
+			ps = con.prepareStatement(INSERT_COMMENT); 
+			ps.setInt(1, vo.getIboard()); 
 			ps.setString(2, vo.getUserName());
 			ps.setString(3, vo.getComment());
 
