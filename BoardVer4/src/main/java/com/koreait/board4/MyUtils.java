@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class MyUtils {
 	public static void openJSP(String fileNm, HttpServletRequest req, HttpServletResponse res)
@@ -25,5 +26,10 @@ public class MyUtils {
 	public static int getParamInt(String key, HttpServletRequest request) {
 		String result = request.getParameter(key);
 		return parseStringToInt(result);
+	}
+	public static void getSession(String val ,HttpSession hs, HttpServletRequest req) {
+		hs = req.getSession();
+		hs.getAttribute(val);
+		
 	}
 }

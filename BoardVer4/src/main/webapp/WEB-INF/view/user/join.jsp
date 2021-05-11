@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div>
-		<a href="Login">로그인 돌아가기</a>
+		<a href="login">로그인 돌아가기</a>
 	</div>
 	
 	<div>

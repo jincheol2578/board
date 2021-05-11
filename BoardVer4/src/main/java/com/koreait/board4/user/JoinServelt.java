@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.koreait.board4.MyUtils;
 
 /**
@@ -26,9 +28,12 @@ public class JoinServelt extends HttpServlet {
 		String unm = request.getParameter("unm");
 		int gender = MyUtils.getParamInt("gender", request);
 		
+		String hashedUpw = BCrypt.hashpw(upw, BCrypt.gensalt());
+		System.out.println(hashedUpw);
+		
 		UserVO vo = new UserVO();
 		vo.setUid(uid);
-		vo.setUpw(upw);
+		vo.setUpw(hashedUpw);
 		vo.setUnm(unm);
 		vo.setGender(gender);
 		

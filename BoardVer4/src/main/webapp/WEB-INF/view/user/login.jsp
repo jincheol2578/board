@@ -6,8 +6,15 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+.errMsg{
+	color: red;
+ }
+
+</style>
 <body>
 	<div>
+		<div class="errMsg">${errMsg}</div>
 		<div>
 			<form action="/user/login" method="post">
 				<div><input type="text" name="uid" placeholder="아이디"></div>
