@@ -6,41 +6,41 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.koreait.board4.MyUtils;
-import com.koreait.board4.user.UserVO;
 
 /**
- * Servlet implementation class WriteServlet
+ * Servlet implementation class ModServlet
  */
-@WebServlet("/board/write")
-public class WriteServlet extends HttpServlet {
+@WebServlet("/board/mod")
+public class ModServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserVO loginUser = MyUtils.getLoginUser(request);
-
-		if (loginUser == null) {
-			response.sendRedirect("/user/login");
+		BoardVO data = BoardDAO.selBoard(MyUtils.getParamInt("iboard", request));
+		request.setAttribute("data", data);
+		
+		if(data.getIuser() != MyUtils.getLoginUserPk(request)) {
+			response.sendRedirect("list");
 			return;
 		}
-		MyUtils.openJSP("board/write", request, response);
+		MyUtils.openJSP("board/mod", request, response);
 	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		int iboard = MyUtils.getParamInt("iboard", request);
 		String title = request.getParameter("title");
 		String ctnt = request.getParameter("ctnt");
 		int iuser = MyUtils.getLoginUserPk(request);
 		
 		BoardVO param = new BoardVO();
-		param.setIuser(iuser);
+		param.setIboard(iboard);
 		param.setTitle(title);
 		param.setCtnt(ctnt);
-
-		BoardDAO.insBoard(param);
+		param.setIuser(iuser);
+		BoardDAO.updBoard(param);
 		
-		response.sendRedirect("list");
+		response.sendRedirect("detail?iboard="+iboard);
+		
 	}
 
 }

@@ -7,6 +7,7 @@
 <title>write</title>
 </head>
 <body>
+	<a href="list">리스트</a>
 	<form action="/board/write" method="post">
 		<div><input type="text" name="title" placeholder="제목"></div>
 		<div><textarea name="ctnt"></textarea></div>

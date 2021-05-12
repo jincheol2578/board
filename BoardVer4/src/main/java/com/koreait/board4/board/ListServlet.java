@@ -23,15 +23,14 @@ public class ListServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession hs = request.getSession();
-		UserVO loginUser = (UserVO) hs.getAttribute("loginUser");
+		UserVO loginUser = MyUtils.getLoginUser(request);
 
-		if (loginUser == null) {
+		if (loginUser == null) {  // 로그아웃 상태면 login 페이지로 이동
 			response.sendRedirect("/user/login");
 			return;
 		}
 		List<BoardVO> list = BoardDAO.selBoardList();
-		request.setAttribute("data", list);
+		request.setAttribute("list", list);
 		MyUtils.openJSP("board/list", request, response);
 	}
 //	protected void doGet(HttpServletRequest request, HttpServletResponse response)

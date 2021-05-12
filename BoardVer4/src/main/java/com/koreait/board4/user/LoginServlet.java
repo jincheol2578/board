@@ -11,9 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import com.koreait.board4.MyUtils;
 
-/**
- * Servlet implementation class LoginServlet
- */
 @WebServlet("/user/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.koreait.board4.user.UserVO;
+
 public class MyUtils {
 	public static void openJSP(String fileNm, HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -23,13 +25,20 @@ public class MyUtils {
 		
 	}
 
-	public static int getParamInt(String key, HttpServletRequest request) {
-		String result = request.getParameter(key);
+	public static int getParamInt(String key, HttpServletRequest req) {
+		String result = req.getParameter(key);
 		return parseStringToInt(result);
 	}
-	public static void getSession(String val ,HttpSession hs, HttpServletRequest req) {
-		hs = req.getSession();
-		hs.getAttribute(val);
-		
+	public static UserVO getLoginUser(HttpServletRequest req) {
+		if(req == null) {return null;}
+		HttpSession hs = req.getSession();
+		return (UserVO) hs.getAttribute("loginUser");
 	}
+
+	public static int getLoginUserPk(HttpServletRequest req) {
+//		UserVO vo = getLoginUser(req);
+//		return vo.getIuser();
+		return getLoginUser(req).getIuser();
+	}
+	
 }
