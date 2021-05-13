@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ page import="java.util.*"%>
-<%@ page import="com.koreait.board.*"%>
+<%@ page import="com.koreait.exam.*"%>
 <%
 	List<BoardVO> list = (List<BoardVO>) request.getAttribute("data");
 %>
