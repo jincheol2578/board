@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.koreait.board5.MyUtils;
 import com.koreait.board5.user.UserVO;
@@ -19,6 +20,11 @@ public class BoardListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		MyUtils.loginCheck(request, response);
 		
+		HttpSession hs = request.getSession();
+		if(hs.getAttribute("loginUser") == null) {
+			response.sendRedirect("/user/login");
+			return;
+		}
 		List<BoardVO> list = BoardDAO.selBoardList();
 		request.setAttribute("list", list);
 		MyUtils.openJSP("board/boardList", request, response);
