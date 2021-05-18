@@ -24,8 +24,7 @@ public class BoardDetailServlet extends HttpServlet {
 		int iboard = MyUtils.getParamInt("iboard", request);
 		BoardVO param = BoardDAO.selBoard(iboard);
 		request.setAttribute("data", param);
-		List<CmtVO> cmtList = CmtDAO.selCmtList(iboard);
-		request.setAttribute("cmtData", cmtList);
+		request.setAttribute("cmtList", CmtDAO.selCmtList(iboard));
 		MyUtils.openJSP("board/boardDetail", request, response);
 		
 	}
