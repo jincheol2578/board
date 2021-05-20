@@ -16,8 +16,10 @@ import com.koreait.board5.MyUtils;
 public class BoardModServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		BoardVO param = BoardDAO.selBoard(MyUtils.getParamInt("iboard",request));
-		request.setAttribute("data", param);
+		BoardVO param = new BoardVO();
+		param.setIuser(MyUtils.getLoginUserPk(request));
+		
+		request.setAttribute("data", BoardDAO.selBoard(param));
 		System.out.println(param.getTitle());
 		MyUtils.openJSP("board/boardMod", request, response);
 	}

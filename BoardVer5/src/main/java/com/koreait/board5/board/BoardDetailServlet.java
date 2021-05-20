@@ -22,9 +22,14 @@ public class BoardDetailServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int iboard = MyUtils.getParamInt("iboard", request);
-		BoardVO param = BoardDAO.selBoard(iboard);
-		request.setAttribute("data", param);
+		int iuser = MyUtils.getLoginUserPk(request);
+		
+		BoardVO param = new BoardVO();
+		param.setIboard(iboard);
+		param.setIuser(iuser);
+		request.setAttribute("data", BoardDAO.selBoard(param));
 		request.setAttribute("cmtList", CmtDAO.selCmtList(iboard));
+		
 		MyUtils.openJSP("board/boardDetail", request, response);
 		
 	}

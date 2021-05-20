@@ -9,20 +9,28 @@
 <script src="/res/js/boardDetail.js?ver=2">
 </script>
 <style>
-	.hidden { display:none;}
-	
+	.hidden { display:none !important;}
+	.fa-heart { color:red; }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
 	<a href="list"><button>뒤로가기</button></a>
-	<div>${data.title }</div>
-	<div>글번호 : ${data.iboard }</div>
-	<div>작성자 : ${data.unm } | 작성일시 : ${data.regdt }</div>
-	<div>내용 : ${data.ctnt }</div>
+	<h1>${requestScope.data.title } 
+	 <c:if test="${data.isFav == 0 }">
+	 <a href="fav?iboard=${param.iboard }&fav=1"><i class="far fa-heart"></i></a>
+	 </c:if>
+	 <c:if test="${data.isFav == 1 }">
+	 <a href="fav?iboard=${param.iboard }&fav=0"><i class="fas fa-heart"></i></a>
+	 </c:if>
+	 </h1>
+	<div>글번호 : ${requestScope.data.iboard }</div>
+	<div>작성자 : ${requestScope.data.unm } | 작성일시 : ${requestScope.data.regdt }</div>
+	<div>내용 : ${requestScope.data.ctnt }</div>
 	<div></div>
 	<div>
-	<a href="mod?iboard=${data.iboard }">수정</a>
-	<a href="del?iboard=${data.iboard }">삭제</a>
+	<a href="mod?iboard=${requestScope.data.iboard }">수정</a>
+	<a href="del?iboard=${requestScope.data.iboard }">삭제</a>
 	</div>
 	
 	
