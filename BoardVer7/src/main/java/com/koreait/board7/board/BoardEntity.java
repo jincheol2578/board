@@ -7,6 +7,7 @@ public class BoardEntity {
 	private String regdt;
 	private int iuser;
 	
+	
 	public int getIboard() {
 		return iboard;
 	}

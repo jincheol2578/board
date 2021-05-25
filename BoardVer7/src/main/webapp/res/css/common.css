@@ -1,13 +1,7 @@
 @charset "UTF-8";
-html, body, ul{
-	margin: 0;
-	padding: 0;
-}
+html, body, ul{	margin: 0;	padding: 0;}
 
-header nav {
-	height: 50px;
-	background-color: skyblue;
-}
+header nav {height: 50px; background-color: skyblue;}
 
 header nav ul {
 	display: flex;
@@ -15,6 +9,6 @@ header nav ul {
 	align-content: center;
 	list-style: none;
 }
-header nav ul li {
-	margin-left: 20px;
-}
+header nav ul li {margin-left: 20px;}
+section { padding-left: 40px; padding-right: 40px; }
+.colorRed{color: red;}

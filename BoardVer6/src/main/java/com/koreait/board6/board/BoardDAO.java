@@ -13,6 +13,7 @@ public class BoardDAO {
 	static PreparedStatement ps = null;
 	static ResultSet rs = null;
 	
+	
 	public static int getAllPage (BoardVO param) {
 		String sql = " SELECT ceil(COUNT(*) / ?) as cnt FROM t_board "
 				+ " WHERE title LIKE ? ";
