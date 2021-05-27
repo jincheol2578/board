@@ -165,7 +165,7 @@ function modAjax() {
 					alert('수정실패');
 					break;
 				case 1:
-					closeModModal();
+					closeModModal(); 
 					getListAjax();
 					break;
 			}
