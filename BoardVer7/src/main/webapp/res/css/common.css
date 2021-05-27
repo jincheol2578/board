@@ -12,3 +12,4 @@ header nav ul {
 header nav ul li {margin-left: 20px;}
 section { padding-left: 40px; padding-right: 40px; }
 .colorRed{color: red;}
+.displayNone{ display: none !important;}

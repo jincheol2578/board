@@ -1,5 +1,6 @@
 var cmtFrmElem = document.querySelector('#cmtFrm');
 var cmtListElem = document.querySelector('#cmtList');
+var cmtModModalElem = document.querySelector('#modal');
 
 function regCmt() {
 	var cmtVal = cmtFrmElem.cmt.value;
@@ -97,7 +98,14 @@ function makeCmtElemList(data) {
 			var modBtn = document.createElement('button');
 			//삭제버튼 클릭시
 			delBtn.addEventListener('click', function() {
-				delAjax(item.icmt);
+				if (confirm('삭제하시겠습니까')) {
+					delAjax(item.icmt);
+				}
+			});
+
+			modBtn.addEventListener('click', function() {
+				openModModal(item);
+
 			});
 
 			delBtn.innerText = '삭제';
@@ -134,6 +142,45 @@ function delAjax(icmt) {
 
 			getListAjax();
 		})
+}
+
+function modAjax() {
+	var cmtModFrmElem = document.querySelector('#cmtModFrm')
+	var param = {
+		icmt: cmtModFrmElem.icmt.value,
+		cmt: cmtModFrmElem.cmt.value
+	}
+	const init = {
+		method: 'POST',
+		body: new URLSearchParams(param)
+	};
+
+	fetch('cmtDelUpd', init)
+		.then(function(res) {
+			return res.Json
+		})
+		.then(function(myJson) {
+			switch (myJson.result) {
+				case 0:
+					alert('수정실패');
+					break;
+				case 1:
+					closeModModal();
+					getListAjax();
+					break;
+			}
+		})
+}
+
+function openModModal({ icmt, cmt }) { // 댓글 수정창 보여주기
+	cmtModModalElem.className = '';
+	var cmtModFrmElem = document.querySelector('#cmtModFrm')
+	cmtModFrmElem.icmt.value = icmt;
+	cmtModFrmElem.cmt.value = cmt;
+}
+
+function closeModModal() {  // 댓글수정창 숨기기
+	cmtModModalElem.className = 'displayNone';
 }
 getListAjax(); // js파일 임포트되면 1회 호출
 
