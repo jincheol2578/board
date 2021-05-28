@@ -2,9 +2,10 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script defer src="/res/js/userMyPage.js"></script>
 <link rel="stylesheet" href="/res/css/userMypage.css">
 	<c:choose>
-		<c:when test="${empty requestScope.loginUser.profileImg }">
+		<c:when test="${empty sessionScope.loginUser.profileImg }">
 			<c:set var="img" value="/res/img/noprofile.jpg"/>
 		</c:when>
 		<c:otherwise>
@@ -13,7 +14,7 @@
 	</c:choose>
 	
 <div>
-	<form action="" method="post" enctype="multipart/form-data">
+	<form action="" method="post" enctype="multipart/form-data" id="frm" onsubmit="return imgChk();">
 		이미지변경 : <input type="file" name="profileImg" accept="image/*">
 		<input type="submit" value="이미지 업로드">
 	</form>

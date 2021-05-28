@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.koreait.board7.MyFileUtils;
 import com.koreait.board7.MyUtils;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -33,19 +34,23 @@ public class UserMyPageServlet extends HttpServlet {
 		
 		MultipartRequest multi = new MultipartRequest(request, uploadPath + "/temp", maxFileSize,
 				"UTF-8", new DefaultFileRenamePolicy());
+		String fileNm = multi.getFilesystemName("profileImg");
+		System.out.println(fileNm);
 		
+		if(fileNm == null) {
+			doGet(request,response);
+			return;
+		}
+		UserEntity loginUser = MyUtils.getLoginUser(request);
 		int loginUserPk = MyUtils.getLoginUserPk(request);
 		
 		String targetFolder = uploadPath + "/user/" + loginUserPk;
+		MyFileUtils.delFolder(targetFolder);
 		
 		File folder = new File(targetFolder);
+//		mkdirs()에서 exists를 검사해줌.
+		folder.mkdirs();  // mkdirs()는 중간경로가 비어있어도 다 만들어줌  mkdir는 x
 		
-//		if(!folder.exists()) {   mkdirs()에서 exists를 검사해줌.
-			folder.mkdirs();  // mkdirs()는 중간경로가 비어있어도 다 만들어줌  mkdir는 x
-//		}
-		
-		String fileNm = multi.getFilesystemName("profileImg");
-		System.out.println(fileNm);
 		
 		int lastDotIdx = fileNm.lastIndexOf("."); 
 		String ext = fileNm.substring(lastDotIdx); // 확장자명 구하기
@@ -55,6 +60,15 @@ public class UserMyPageServlet extends HttpServlet {
 		
 		File imgFile = new File(uploadPath + "/temp" + "/" + fileNm);
 		imgFile.renameTo(new File(targetFolder + "/" + newFileNm));
+		
+		UserEntity param = new UserEntity();
+		param.setIuser(loginUserPk);
+		param.setProfileImg(newFileNm);
+		
+		UserDAO.updUser(param);
+		loginUser.setProfileImg(newFileNm);
+		
+		doGet(request, response);
 	}
 
 }

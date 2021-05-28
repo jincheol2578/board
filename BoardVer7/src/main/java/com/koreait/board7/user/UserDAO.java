@@ -10,6 +10,35 @@ public class UserDAO {
 	public static Connection con = null;
 	public static PreparedStatement ps = null;
 	public static ResultSet rs = null;
+	
+	public static int updUser(UserEntity param) {
+		String sql = " UPDATE t_user ";
+		String updString = null;
+		if(param.getUpw() != null && !param.getUpw().equals("")) {
+			sql += " SET upw = ? ";
+			updString = param.getUpw();
+		} else if (param.getProfileImg() != null && !param.getProfileImg().equals("")) {
+			sql += " SET profileImg = ? ";
+			updString = param.getProfileImg();
+		}
+		
+		sql += " WHERE iuser = ? ";
+		
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, updString);
+			ps.setInt(2, param.getIuser());
+			return ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.close(con, ps);
+			return 0;
+		}
+	}
+	
 	public static int selIdChk(String uid) {
 		//아이디가 있으면 1, 없으면 0 리턴
 		String sql = " SELECT uid FROM t_user WHERE uid = ?";
@@ -49,7 +78,7 @@ public class UserDAO {
 			if (rs.next()) {
 				int iuser = rs.getInt("iuser");
 				String uid = rs.getString("uid");
-				String upw = rs.getString("upw");
+				String upw = rs.getString("upw"); 
 				String unm = rs.getString("unm");
 				String profileImg = rs.getString("profileImg");
 				
